@@ -39,8 +39,10 @@ xxxxx
 - React
 - Next.js 14
 - TailwindCSS
+- useContext
+- useReducer
+- Server Component
 - React Icon
-- TailwildCSS
 
 ## Feature
 

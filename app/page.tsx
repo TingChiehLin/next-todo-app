@@ -8,16 +8,28 @@ import Modal from "@/components/Modal";
 import TodoList from "@/layouts/TodoList";
 import InfoCard from "@/components/Info";
 
+import { TodoContext } from "@/store/todo-context";
 
 export default function Home() {
   const [isOpen, setIsOpen] = React.useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
+
+  const todoCtx = React.useContext(TodoContext);
   
-  const handleAdd = () => {
+  const handleOpenModal = () => {
+      // const newTodo = {
+      //     id: Math.random(),
+      //     name: "New Todo",
+      //     description: "Description",
+      //     is_completed: false,
+      //     created_at: "08/08/2021",
+      //     updated_at: "08/06/2022"
+      // }
+      todoCtx.addTodo(2,"test","test");
       setIsOpen(true);
   }
 
-  const handleClose = () => {
+  const handleCloseModal = () => {
       setIsOpen(false);
   }
 
@@ -47,13 +59,13 @@ export default function Home() {
     <main className="w-full max-w-7xl mx-auto py-24">
       <section className="flex justify-between items-baseline">
         <H1 title={"Todo List App"} alignContent={"left"} className="mb-20"/>
-        <Button title={"Add"} type={"button"} variant={"Add"} onClick={handleAdd}/>
+        <Button title={"Add"} type={"button"} variant={"Add"} onClick={handleOpenModal}/>
       </section>
-      <TodoList todos={["Buy groceries"]} />
+      <TodoList todos={todoCtx.todos} />
       {
         isOpen &&
         <Modal isOpen={isOpen}>
-          <InfoCard onClose={handleClose} reference={ref}/>
+          <InfoCard onClose={handleCloseModal} reference={ref}/>
         </Modal> 
       }
     </main>

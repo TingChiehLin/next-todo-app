@@ -4,7 +4,10 @@ interface ThTypeProp {
 
 const Th:React.FC<ThTypeProp> = ({...props}) => {   
     return (
-        <th scope="col" className="text-xl text-cyan-900 font-semibold uppercase">{props.text}</th>
+        <th scope="col" 
+            className="text-xl text-cyan-900 font-semibold uppercase py-6">
+            {props.text}
+        </th>
     );
 }
 

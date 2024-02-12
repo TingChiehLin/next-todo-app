@@ -1,13 +1,24 @@
-import Button from "@/components/Button";
+import * as React from 'react';
+
+import TR from "@/components/TR";
 import Th from "@/components/Th";
 
 import { ths } from "@/libs/th";
+import Todo from "@/models/Todo.model";
 
 interface TodoListPropType {
-    todos: string[];
+    todos: Todo[];
 }
 
 const TodoList: React.FC<TodoListPropType> = ({todos}) => {
+
+    const handleEditTodo = (index: number) => {
+        console.log("Edit", index);
+    }
+
+    const handleDeleteTodo = (index: number) => {
+        console.log("Delete", index);
+    }
     return (
         <table className="w-full max-w-7xl text-left whitespace-nowrap">
             <colgroup>
@@ -23,17 +34,19 @@ const TodoList: React.FC<TodoListPropType> = ({todos}) => {
                </tr>
            </thead>
            <tbody>
-            <tr>
-                <th scope="row">Assignment</th>
-                <td>Complete Math assignment</td>
-                <td>Yes</td>
-                <td>2023-09-14</td>
-                <td>2024-02-08</td>
-                <td className="flex items-center h-20 gap-2">
-                    <Button title={"Edit"} type={"button"} variant={"Edit"}/>
-                    <Button title={"Delete"} type={"button"} variant={"Delete"}/>
-                </td>
-            </tr>
+            {
+                todos.map((todo)=>  
+                <TR 
+                    key={todo.id}
+                    name={todo.name} 
+                    description={todo.description} 
+                    is_completed={todo.is_completed}
+                    created_at={todo.created_at}
+                    updated_at={todo.updated_at}
+                    onEdit={() => handleEditTodo}
+                    onDelete={() => handleDeleteTodo}
+                />)
+            }
            </tbody>
         </table>
     );

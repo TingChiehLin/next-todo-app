@@ -2,9 +2,9 @@ interface Todo {
     id: number;
     name: string;
     description: string;
-    completed: boolean;
-    createdAt: Date;
-    updatedAt: Date;
+    is_completed: boolean;
+    created_at: string;
+    updated_at: string;
 }
 
 export default Todo;
