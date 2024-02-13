@@ -14,18 +14,9 @@ export default function Home() {
   const [isOpen, setIsOpen] = React.useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
 
-  const todoCtx = React.useContext(TodoContext);
+  const {todos} = React.useContext(TodoContext);
   
   const handleOpenModal = () => {
-      // const newTodo = {
-      //     id: Math.random(),
-      //     name: "New Todo",
-      //     description: "Description",
-      //     is_completed: false,
-      //     created_at: "08/08/2021",
-      //     updated_at: "08/06/2022"
-      // }
-      todoCtx.addTodo(2,"test","test");
       setIsOpen(true);
   }
 
@@ -61,7 +52,7 @@ export default function Home() {
         <H1 title={"Todo List App"} alignContent={"left"} className="mb-20"/>
         <Button title={"Add"} type={"button"} variant={"Add"} onClick={handleOpenModal}/>
       </section>
-      <TodoList todos={todoCtx.todos} />
+      <TodoList todos={todos}/>
       {
         isOpen &&
         <Modal isOpen={isOpen}>

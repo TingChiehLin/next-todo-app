@@ -22,10 +22,22 @@ type TodoContextType = Todostate & {
     removeTodo: (index: number) => void,
 }
 
-interface TodoAction {
-    type: "ADD_TODO" | "REMOVE_TODO" | "UPDATE_TODO",
-    payload?: TodoItem
+type AddTodoAction = {
+    type: "ADD_TODO",
+    payload: TodoItem
 }
+
+type RemoveTodoAction = {
+    type: "REMOVE_TODO",
+    payload: number
+}
+
+type UpdateTodoAction = {
+    type: "UPDATE_TODO",
+    payload: TodoItem
+}
+
+type TodoAction = AddTodoAction | RemoveTodoAction | UpdateTodoAction;
 
 const testData: Todo[] = [{
     id: 0,
@@ -41,9 +53,9 @@ const todoReducer = (state: Todostate, action: TodoAction):Todostate => {
 
     if(type === "ADD_TODO") {
         const newTodo:Todo = {
-            id: payload!.id,
-            name: payload!.name,
-            description: payload!.description,
+            id: payload.id,
+            name: payload.name,
+            description: payload.description,
             is_completed: false,
             created_at: "08/08/2021",
             updated_at: "08/06/2022"
