@@ -1,43 +1,19 @@
 'use client'
 
-import Todo from '@/models/Todo.model';
 import * as React from 'react';
+
+import Todo from "@/models/Todo.model";  
+import {Todostate, todoReducer } from "@/reducers/todoReducer";
 
 interface TodoProviderTypeProp {
     children: React.ReactNode;
 }
 
-type TodoItem = {
-    id: number,
-    name: string,
-    description: string
-}
-
-type Todostate = {
-    todos: Todo[]
-}
-
 type TodoContextType = Todostate & {
-    addTodo: (id: number, name: string, description: string) => void,
-    removeTodo: (index: number) => void,
+    addTodo: (id: number, name: string, description: string, created_at: string ,updated_at: string) => void,
+    deleteTodo: (index: number) => void,
+    updatedTodo: (id: number, name: string, description: string, updated_at: string) => void,
 }
-
-type AddTodoAction = {
-    type: "ADD_TODO",
-    payload: TodoItem
-}
-
-type RemoveTodoAction = {
-    type: "REMOVE_TODO",
-    payload: number
-}
-
-type UpdateTodoAction = {
-    type: "UPDATE_TODO",
-    payload: TodoItem
-}
-
-type TodoAction = AddTodoAction | RemoveTodoAction | UpdateTodoAction;
 
 const testData: Todo[] = [{
     id: 0,
@@ -48,31 +24,12 @@ const testData: Todo[] = [{
     updated_at: "08/06/2022",
 }];
 
-const todoReducer = (state: Todostate, action: TodoAction):Todostate => {
-    const {type, payload} = action;
-
-    if(type === "ADD_TODO") {
-        const newTodo:Todo = {
-            id: payload.id,
-            name: payload.name,
-            description: payload.description,
-            is_completed: false,
-            created_at: "08/08/2021",
-            updated_at: "08/06/2022"
-        }
-        return {
-            ...state,
-            todos: [...state.todos, newTodo]
-        }
-    }
-
-    return state;
-}
 
 const initialCtx = {
     todos: [],
-    addTodo: (id: number ,name: string, description: string) => {},
-    removeTodo: (index: number) => {},
+    addTodo: (id: number ,name: string,created_at: string ,updated_at: string) => {},
+    deleteTodo: (id: number) => {},
+    updatedTodo: (id: number, name: string, description: string, updatedDate: string) => {},
 }
 
 const initialState: Todostate =  {
@@ -91,18 +48,36 @@ export const TodoProvider: React.FC<TodoProviderTypeProp> = ({children}) => {
                 id: id,
                 name: name,
                 description: description,
+                created_at: new Date().toLocaleDateString(),
+                updated_at: new Date().toLocaleDateString()
             }
         })
     }
 
-    const handleRemoveTodo = (index: number) => {
+    const handleRemoveTodo = (id: number) => {
+        todoDispatch({
+            type: "REMOVE_TODO",
+            payload: id
+        })
+    }
 
+    const handleUpdatedTodo = (id: number, name: string, description: string, updated_at: string) => {
+        todoDispatch({
+            type: "UPDATE_TODO",
+            payload: {
+                id: id,
+                name: name,
+                description: description,
+                updated_at: updated_at
+            }
+        })
     }
 
     const ctxValue = {
         todos: todoState.todos,
         addTodo: handleAddTodo,
-        removeTodo:handleRemoveTodo,
+        deleteTodo:handleRemoveTodo,
+        updatedTodo: handleUpdatedTodo,
     }
 
     return (

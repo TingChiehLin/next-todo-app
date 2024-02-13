@@ -12,7 +12,7 @@ interface InfoCardTypeProp {
 }
 
 const Info:React.FC<InfoCardTypeProp> = ({...props}) => {
-    const {addTodo} = React.useContext(TodoContext);
+    const {addTodo, updatedTodo} = React.useContext(TodoContext);
     const [values, setValues] = React.useState({
         title: {
             value: "",
@@ -45,7 +45,7 @@ const Info:React.FC<InfoCardTypeProp> = ({...props}) => {
             })
             return;
         }
-        addTodo(Math.random(), title, description);
+        addTodo(Math.random(), title, description, "", "");
         onClose();
     }
 
@@ -58,6 +58,10 @@ const Info:React.FC<InfoCardTypeProp> = ({...props}) => {
                 isInvalid: value === "" ? true : false
             }
         })
+    }
+
+    const handleUpdatedTodo = (id: number, name: string, description: string) => {
+        updatedTodo(id, name, description,"");
     }
 
     return (

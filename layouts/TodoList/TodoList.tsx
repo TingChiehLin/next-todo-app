@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { TodoContext } from "@/store/todo-context";
+
 import TR from "@/components/TR";
 import Th from "@/components/Th";
 
@@ -11,14 +13,17 @@ interface TodoListPropType {
 }
 
 const TodoList: React.FC<TodoListPropType> = ({todos}) => {
+    const {deleteTodo, updatedTodo} = React.useContext(TodoContext);
 
-    const handleEditTodo = (index: number) => {
-        console.log("Edit", index);
+    const handleUpdatedTodo = (id: number, name: string, description: string, updated_at: string) => {
+        
+        updatedTodo(id, name, description, updated_at);
     }
 
-    const handleDeleteTodo = (index: number) => {
-        console.log("Delete", index);
+    const handleDelete = (id: number) => {
+        deleteTodo(id);
     }
+
     return (
         <table className="w-full max-w-7xl text-left whitespace-nowrap">
             <colgroup>
@@ -30,7 +35,7 @@ const TodoList: React.FC<TodoListPropType> = ({todos}) => {
             </colgroup>
             <thead>
                <tr>
-                {ths.map((th, index) => <Th key={index + "_" + th} text={th.text}/>)}
+               {ths.map((th, index) => <Th key={index + "_" + th} text={th.text}/>)}
                </tr>
            </thead>
            <tbody>
@@ -43,10 +48,10 @@ const TodoList: React.FC<TodoListPropType> = ({todos}) => {
                     is_completed={todo.is_completed}
                     created_at={todo.created_at}
                     updated_at={todo.updated_at}
-                    onEdit={() => handleEditTodo}
-                    onDelete={() => handleDeleteTodo}
-                />)
-            }
+                    onEdit={() => handleUpdatedTodo(todo.id, todo.name, todo.description, todo.updated_at)}
+                    onDelete={() => handleDelete(todo.id)}
+                />
+            )}
            </tbody>
         </table>
     );

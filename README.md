@@ -42,7 +42,6 @@ xxxxx
 - useContext
 - useReducer
 - Server Component
-- React Icon
 
 ## Feature
 
