@@ -8,34 +8,16 @@ import Modal from "@/components/Modal";
 import TodoList from "@/layouts/TodoList";
 import Info from "@/components/Info";
 
-import { initialModalState, modalReducer } from "@/reducers/modalReducer";
 import { TodoContext } from "@/store/todo-context";
 
 export default function Home() {
-  const [modalState, modaldispatch] = React.useReducer(modalReducer, initialModalState);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [ModalType, setModalType] = React.useState("");
   const ref = React.useRef<HTMLDivElement>(null);
-  const {todos} = React.useContext(TodoContext);
+  const {todos, updatedTodo} = React.useContext(TodoContext);
   
-  const handleAddModal = () => {
-    modaldispatch({
-      type: "ADD_TODO_MODAL",
-      payload: {
-        title: "Add Todo",
-        type: "ADD_TODO",
-        isModalOpen: true,
-      }
-    })
-  }
-
-  const handleCloseModal = () => {
-     modaldispatch({
-      type: "CLOSE_MODAL",
-      payload: false
-     })
-  }
-
   React.useEffect(() => {
-    if(modalState.isModalOpen) {
+    if(isModalOpen) {
       const handleESC = (event: KeyboardEvent) => {
         if(event.key === "Escape") {
           handleCloseModal();
@@ -54,7 +36,26 @@ export default function Home() {
         document.removeEventListener("click", mouseClickOutside);
       }
    } 
-  }, [modalState.isModalOpen])
+  }, [isModalOpen])
+
+  const handleAddModal = () => {
+    setIsModalOpen(true);
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  }
+
+  const handleUpdatedTodo = (id: number) => {
+    const name = todos.find(todo => todo.id === id)?.name || "";
+    const description = todos.find(todo => todo.id === id)?.description || "" ; 
+    const updateName = prompt("Update Name", name);
+    const updateDescription = prompt("Update Description", description);
+    if(!updateName || !updateDescription) {
+      return;
+    }
+    updatedTodo(id, updateName as string, updateDescription as string, new Date().toLocaleDateString());
+  }
 
   return (
     <main className="w-full max-w-7xl mx-auto py-24">
@@ -62,11 +63,11 @@ export default function Home() {
         <H1 title={"Todo List App"} alignContent={"left"} className="mb-20"/>
         <Button title={"Add"} type={"button"} variant={"Add"} onClick={handleAddModal}/>
       </section>
-      <TodoList todos={todos} />
+      <TodoList todos={todos} OnEdit={handleUpdatedTodo}/>
       {
-        modalState.isModalOpen &&
-        <Modal isModalOpen={modalState.isModalOpen}>
-          <Info onClose={handleCloseModal} reference={ref}/>
+        isModalOpen &&
+        <Modal isModalOpen={isModalOpen}>
+          <Info onClose={handleCloseModal} reference={ref} />
         </Modal> 
       }
     </main>

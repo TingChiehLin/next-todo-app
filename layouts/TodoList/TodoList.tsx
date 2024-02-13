@@ -10,15 +10,11 @@ import Todo from "@/models/Todo.model";
 
 interface TodoListPropType {
     todos: Todo[];
+    OnEdit: (id: number) => void;
 }
 
-const TodoList: React.FC<TodoListPropType> = ({todos}) => {
-    const {deleteTodo, updatedTodo} = React.useContext(TodoContext);
-
-    const handleUpdatedTodo = (id: number, name: string, description: string, updated_at: string) => {
-        
-        updatedTodo(id, name, description, updated_at);
-    }
+const TodoList: React.FC<TodoListPropType> = ({todos, OnEdit}) => {
+    const {deleteTodo} = React.useContext(TodoContext);
 
     const handleDelete = (id: number) => {
         deleteTodo(id);
@@ -48,7 +44,7 @@ const TodoList: React.FC<TodoListPropType> = ({todos}) => {
                     is_completed={todo.is_completed}
                     created_at={todo.created_at}
                     updated_at={todo.updated_at}
-                    onEdit={() => handleUpdatedTodo(todo.id, todo.name, todo.description, todo.updated_at)}
+                    onEdit={() => OnEdit(todo.id)}
                     onDelete={() => handleDelete(todo.id)}
                 />
             )}
