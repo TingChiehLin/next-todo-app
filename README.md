@@ -29,9 +29,36 @@ Go to [Local Dev Link](http://localhost:3000)
 
 ## API Guide
 
+[API Link](https://wayi.league-funny.com/api)
+
 GET 
 ```bash
-xxxxx
+#Search todo lise
+/task 
+```
+
+POST 
+```bash
+#Add todo 
+/task 
+```
+
+PUT 
+```bash
+#Update todo
+/task/{id}
+```
+
+PATCH 
+```bash
+#Update todo status
+/task/{id}
+```
+
+DELETE 
+```bash
+#Delete todo
+/task/{id}
 ```
 
 ## Tech I used
