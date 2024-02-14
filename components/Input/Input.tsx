@@ -4,7 +4,7 @@ interface InputTypeProp {
     name: string;
     placeholder: string;
     value: string;
-    isInvalid: boolean;
+    isinvalid: boolean;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -24,7 +24,7 @@ const Input: React.FC<InputTypeProp> = ({...props}) => {
                         `}
             {...props}
         />
-        { props.isInvalid &&
+        { props.isinvalid &&
             <span className="text-rose-500 mt-2 block">Input field must not be empty</span>
         }
     </div>

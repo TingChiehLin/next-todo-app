@@ -7,7 +7,9 @@ import Button from "../Button";
 import { TodoContext } from "@/store/todo-context";
 
 interface InfoCardTypeProp {
+    infoTitle: string;
     reference: React.RefObject<HTMLDivElement>;
+    onEdit?: (name: string, description: string) => void;
     onClose: () => void;    
 }
 
@@ -16,19 +18,19 @@ const Info:React.FC<InfoCardTypeProp> = ({...props}) => {
     const [values, setValues] = React.useState({
         title: {
             value: "",
-            isInvalid: false
+            isinvalid: false
         },
         description: {
             value: "",
-            isInvalid: false
+            isinvalid: false
         },
     })
 
-    const {reference, onClose} = props;
+    const {infoTitle, reference, onEdit, onClose} = props;
     const isDisable = values["title"].value === "" 
                       || values["description"].value === "" 
-                      || values["title"].isInvalid 
-                      || values["description"].isInvalid;
+                      || values["title"].isinvalid 
+                      || values["description"].isinvalid;
 
     const handleAddTodo = (title: string, description: string) => {
         if(title === "" || description === "") {
@@ -36,11 +38,11 @@ const Info:React.FC<InfoCardTypeProp> = ({...props}) => {
                 ...values,
                 title: {
                     value: title,
-                    isInvalid: title === "" ? true : false
+                    isinvalid: title === "" ? true : false
                 },
                 description: {
                     value: description,
-                    isInvalid: description === "" ? true : false
+                    isinvalid: description === "" ? true : false
                 }
             })
             return;
@@ -55,9 +57,17 @@ const Info:React.FC<InfoCardTypeProp> = ({...props}) => {
             ...values,
             [event.target.name]: {
                 value: value,
-                isInvalid: value === "" ? true : false
+                isinvalid: value === "" ? true : false
             }
         })
+    }
+
+    const handleEdit = (name: string, description: string) => {
+        if (onEdit) {
+            onEdit(name, description);
+            onClose();
+        }
+        return 
     }
 
     return (
@@ -75,14 +85,14 @@ const Info:React.FC<InfoCardTypeProp> = ({...props}) => {
                 "
                 ref={reference}
             >
-            <H1 title={"Add Todo"} alignContent={"center"} className="mb-12"/>
+            <H1 title={infoTitle} alignContent={"center"} className="mb-12"/>
             <div className="w-full flex flex-col gap-8">
                 <Input label={"Name"} 
                        type={"text"} 
                        name={"title"}
                        placeholder={"Please Input Title"} 
                        value={values["title"].value} 
-                       isInvalid={values["title"].isInvalid}
+                       isinvalid={values["title"].isinvalid}
                        onChange={handleChange}
                 />
                  <Input label={"Description"} 
@@ -90,7 +100,7 @@ const Info:React.FC<InfoCardTypeProp> = ({...props}) => {
                         name={"description"}
                         placeholder={"Please Input Description"} 
                         value={values["description"].value} 
-                        isInvalid={values["description"].isInvalid}
+                        isinvalid={values["description"].isinvalid}
                         onChange={handleChange}
                 />
                 <div className="flex justify-end gap-3">
@@ -98,12 +108,21 @@ const Info:React.FC<InfoCardTypeProp> = ({...props}) => {
                             variant={"Close"} 
                             onClick={onClose} 
                     />
-                    <Button title={"Add"} 
+                    {infoTitle === "Add Todo" &&
+                        <Button title={"Add"} 
                             type={"button"} 
                             variant={"Add"} 
                             disabled={isDisable}
                             onClick={() => handleAddTodo(values["title"].value, values["description"].value)}
-                    />
+                    />}
+                    {infoTitle === "Edit Todo" &&
+                        <Button title={"Edit"} 
+                            type={"button"} 
+                            variant={"Edit"} 
+                            disabled={isDisable}
+                            onClick={() => handleEdit(values["title"].value, values["description"].value)}
+                    />}
+
                 </div>
             </div>
           </div>

@@ -12,7 +12,8 @@ import { TodoContext } from "@/store/todo-context";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [ModalType, setModalType] = React.useState("");
+  const [modalType, setModalType] = React.useState("");
+  const [todoId, setTodoId] = React.useState(0);
   const ref = React.useRef<HTMLDivElement>(null);
   const {todos, updatedTodo} = React.useContext(TodoContext);
   
@@ -39,22 +40,33 @@ export default function Home() {
   }, [isModalOpen])
 
   const handleAddModal = () => {
+    setModalType("AddModal");
     setIsModalOpen(true);
   }
 
   const handleCloseModal = () => {
+    setModalType("");
     setIsModalOpen(false);
   }
 
-  const handleUpdatedTodo = (id: number) => {
-    const name = todos.find(todo => todo.id === id)?.name || "";
-    const description = todos.find(todo => todo.id === id)?.description || "" ; 
-    const updateName = prompt("Update Name", name);
-    const updateDescription = prompt("Update Description", description);
+  const handleEditModal = () => {
+    setModalType("EditModal");
+    setIsModalOpen(true);
+  }
+
+  const handleEditTodo = (id: number) => {
+    handleEditModal();
+    setTodoId(id)
+  }
+
+  const handleUpdatedInput = (name: string, description: string ) => {
+    const updateName = name;
+    const updateDescription = description;
     if(!updateName || !updateDescription) {
       return;
     }
-    updatedTodo(id, updateName as string, updateDescription as string, new Date().toLocaleDateString());
+    console.log("Updated Todo:", updateName, updateDescription);
+    updatedTodo(todoId, updateName, updateDescription, new Date().toLocaleDateString());
   }
 
   return (
@@ -63,12 +75,22 @@ export default function Home() {
         <H1 title={"Todo List App"} alignContent={"left"} className="mb-20"/>
         <Button title={"Add"} type={"button"} variant={"Add"} onClick={handleAddModal}/>
       </section>
-      <TodoList todos={todos} OnEdit={handleUpdatedTodo}/>
+      <TodoList todos={todos} OnEdit={handleEditTodo}/>
       {
-        isModalOpen &&
+        isModalOpen && modalType === "AddModal" &&
         <Modal isModalOpen={isModalOpen}>
-          <Info onClose={handleCloseModal} reference={ref} />
+          <Info reference={ref} infoTitle={"Add Todo"} onClose={handleCloseModal}/>
         </Modal> 
+      }
+      {
+        isModalOpen && modalType === "EditModal" &&
+        <Modal isModalOpen={isModalOpen}>
+          <Info reference={ref} 
+                infoTitle={"Edit Todo"} 
+                onClose={handleCloseModal} 
+                onEdit={handleUpdatedInput}
+          />
+        </Modal>
       }
     </main>
   );
