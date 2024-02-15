@@ -2,7 +2,7 @@
 
 The project is to demo To Do App with CRUD Operation. I have not finished API implemention.
 
-![todo_preview](./public/todo_app_preview.png)
+![todo_preview](./public/todo_preview.png)
 
 ## Table of contents
 
