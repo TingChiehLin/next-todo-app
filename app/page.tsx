@@ -10,13 +10,15 @@ import Info from "@/components/Info";
 
 import { TodoContext } from "@/store/todo-context";
 
+import { getTodos } from "@/libs/actions";
+
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [modalType, setModalType] = React.useState("");
   const [todoId, setTodoId] = React.useState(0);
   const ref = React.useRef<HTMLDivElement>(null);
   const {todos, updatedTodo} = React.useContext(TodoContext);
-  
+
   React.useEffect(() => {
     if(isModalOpen) {
       const handleESC = (event: KeyboardEvent) => {

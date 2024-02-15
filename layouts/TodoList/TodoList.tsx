@@ -44,6 +44,7 @@ const TodoList: React.FC<TodoListPropType> = ({todos, OnEdit}) => {
                     is_completed={todo.is_completed}
                     created_at={todo.created_at}
                     updated_at={todo.updated_at}
+                    onCompleted={() => {}}  
                     onEdit={() => OnEdit(todo.id)}
                     onDelete={() => handleDelete(todo.id)}
                 />

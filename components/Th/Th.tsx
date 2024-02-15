@@ -4,7 +4,6 @@ interface ThTypeProp {
 }
 
 const Th:React.FC<ThTypeProp> = ({...props}) => {  
-    console.log(props.order); 
     return (
         <th scope="col" 
             className={`${(props.order >= 1 && props.order < 5) && `hidden md:table-cell`} 

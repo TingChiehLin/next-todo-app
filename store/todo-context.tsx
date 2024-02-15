@@ -2,8 +2,9 @@
 
 import * as React from 'react';
 
-import Todo from "@/models/Todo.model";  
 import {Todostate, todoReducer } from "@/reducers/todoReducer";
+
+import { getTodos } from '@/libs/actions';
 
 interface TodoProviderTypeProp {
     children: React.ReactNode;
@@ -15,16 +16,6 @@ type TodoContextType = Todostate & {
     updatedTodo: (id: number, name: string, description: string, updated_at: string) => void,
 }
 
-const testData: Todo[] = [{
-    id: 0,
-    name: "Assignment", 
-    description: "description",
-    is_completed: false, 
-    created_at: "08/08/2021", 
-    updated_at: "08/06/2022",
-}];
-
-
 const initialCtx = {
     todos: [],
     addTodo: (id: number ,name: string,created_at: string ,updated_at: string) => {},
@@ -32,14 +23,14 @@ const initialCtx = {
     updatedTodo: (id: number, name: string, description: string, updatedDate: string) => {},
 }
 
-const initialState: Todostate =  {
-    todos: testData
+const initialState: Todostate = {
+    todos: [],
 }
 
 export const TodoContext = React.createContext<TodoContextType>(initialCtx);
 
 export const TodoProvider: React.FC<TodoProviderTypeProp> = ({children}) => {
-    const [todoState, todoDispatch] = React.useReducer(todoReducer,initialState)
+    const [todoState, todoDispatch] = React.useReducer(todoReducer, initialState)
 
     const handleAddTodo = (id: number, name: string, description: string) => {
         todoDispatch({

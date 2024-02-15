@@ -7,12 +7,13 @@ interface TRTypeProps {
     is_completed: boolean;
     created_at: string;
     updated_at: string;
+    onCompleted: () => void;    
     onEdit: () => void;
     onDelete: () => void;
 }
 
 const TR: React.FC<TRTypeProps> = ({...props}) => {
-    const {name, description, is_completed, created_at, updated_at, onEdit, onDelete} = props;
+    const {name, description, is_completed, created_at, updated_at, onCompleted, onEdit, onDelete} = props;
 
     return (
         <tr className="py-6">
@@ -22,7 +23,7 @@ const TR: React.FC<TRTypeProps> = ({...props}) => {
             <td className={`hidden md:table-cell`}>{created_at}</td>
             <td className={`hidden md:table-cell`}>{updated_at}</td>
             <td className="flex items-center py-6 gap-2 flex-wrap md:flex-nowrap pl-6 md:pl-0">
-                <Button title={"Complete"} type={"button"} variant={"Complete"} onClick={onEdit}/>
+                <Button title={"Complete"} type={"button"} variant={"Complete"} onClick={onCompleted}/>
                 <Button title={"Edit"} type={"button"} variant={"Edit"} onClick={onEdit}/>
                 <Button title={"Delete"} type={"button"} variant={"Delete"} onClick={onDelete}/>
             </td>
