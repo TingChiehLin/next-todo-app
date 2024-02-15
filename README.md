@@ -1,6 +1,6 @@
 ## Next To-Do App
 
-The project is to demo To Do App with CRUD Operation
+The project is to demo To Do App with CRUD Operation. I have not finished API implemention.
 
 ![todo_preview](./public/todo_app_preview.png)
 
@@ -26,6 +26,8 @@ npm run dev or yarn run dev
 ```
 
 Go to [Local Dev Link](http://localhost:3000)
+
+[Demo Link](https://next14-to-do-app.vercel.app)
 
 ## API Guide
 
@@ -68,7 +70,6 @@ DELETE
 - TailwindCSS
 - useContext
 - useReducer
-- Server Component
 
 ## Feature
 
