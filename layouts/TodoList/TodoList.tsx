@@ -23,22 +23,22 @@ const TodoList: React.FC<TodoListPropType> = ({todos, OnEdit}) => {
     return (
         <table className="w-full max-w-7xl text-left whitespace-nowrap">
             <colgroup>
-                <col className="w-8/12 lg:w-2/12"/>
+                <col className="w-2/12 lg:w-2/12"/>
                 <col className="w-3/12 lg:w-4/12" />
-                <col className="w-4/12 md:w-4/12 lg:w-2/12"/>
-                <col className="lg:w-2/12" />
-                <col className="lg:w-2/12" />
+                <col className="w-2/12 md:w-4/12 lg:w-2/12"/>
+                <col className="w-1/12 lg:w-2/12" />
+                <col className="w-4/12 lg:w-2/12"/>
             </colgroup>
             <thead>
                <tr>
-               {ths.map((th, index) => <Th key={index + "_" + th} text={th.text}/>)}
+                 {ths.map((th, index) => <Th key={index} order={index} text={th.text}/>)}
                </tr>
            </thead>
            <tbody>
             {
-                todos.map((todo)=>  
+                todos.map((todo, index)=>  
                 <TR 
-                    key={todo.id}
+                    key={index}
                     name={todo.name} 
                     description={todo.description} 
                     is_completed={todo.is_completed}

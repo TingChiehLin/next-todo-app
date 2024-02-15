@@ -84,7 +84,7 @@ Font
 
 Color
 
-- [Slate & Rose & Cyan](https://tailwindcss.com/docs/customizing-colors)
+- [Slate & Rose & Cyan & Green](https://tailwindcss.com/docs/customizing-colors)
 
 ## Learn More
 

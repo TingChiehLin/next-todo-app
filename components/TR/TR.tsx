@@ -17,11 +17,12 @@ const TR: React.FC<TRTypeProps> = ({...props}) => {
     return (
         <tr className="py-6">
             <th scope="row">{name}</th>
-            <td>{description}</td>
-            <td>{is_completed ? "YES" : "NO"}</td>
-            <td>{created_at}</td>
-            <td>{updated_at}</td>
-            <td className="flex items-center py-6 gap-2">
+            <td className={`hidden md:table-cell`}>{description}</td>
+            <td className={`hidden md:table-cell`}>{is_completed ? "YES" : "NO"}</td>
+            <td className={`hidden md:table-cell`}>{created_at}</td>
+            <td className={`hidden md:table-cell`}>{updated_at}</td>
+            <td className="flex items-center py-6 gap-2 flex-wrap md:flex-nowrap pl-6 md:pl-0">
+                <Button title={"Complete"} type={"button"} variant={"Complete"} onClick={onEdit}/>
                 <Button title={"Edit"} type={"button"} variant={"Edit"} onClick={onEdit}/>
                 <Button title={"Delete"} type={"button"} variant={"Delete"} onClick={onDelete}/>
             </td>

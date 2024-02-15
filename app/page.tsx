@@ -65,12 +65,11 @@ export default function Home() {
     if(!updateName || !updateDescription) {
       return;
     }
-    console.log("Updated Todo:", updateName, updateDescription);
     updatedTodo(todoId, updateName, updateDescription, new Date().toLocaleDateString());
   }
 
   return (
-    <main className="w-full max-w-7xl mx-auto py-24">
+    <main className="w-full max-w-sm md:max-w-4xl lg:max-w-5xl xl:max-w-7xl mx-auto py-24">
       <section className="flex justify-between items-baseline">
         <H1 title={"Todo List App"} alignContent={"left"} className="mb-20"/>
         <Button title={"Add"} type={"button"} variant={"Add"} onClick={handleAddModal}/>

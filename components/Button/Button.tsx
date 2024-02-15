@@ -1,6 +1,6 @@
 "use client";
 
-export type Buttons = "Add" | "Edit" | "Close" | "Delete";
+export type Buttons = "Add" | "Complete" | "Edit" | "Close" | "Delete";
 
 interface ButtonTypeProp {
     title: string;
@@ -14,6 +14,7 @@ interface ButtonTypeProp {
 
 const buttonMapper: {[k in Buttons]: string} = {
     "Add": "bg-cyan-400",
+    "Complete": "bg-green-400",
     "Edit": "bg-cyan-400",
     "Close": "bg-rose-600",
     "Delete": "bg-rose-600",
@@ -21,6 +22,7 @@ const buttonMapper: {[k in Buttons]: string} = {
 
 const hoverMapper: {[k in Buttons] : string} = {
     "Add": "hover:bg-cyan-300 hover:text-cyan-900",
+    "Complete": "hover:bg-green-300 hover:text-green-900",
     "Edit": "hover:bg-cyan-300 hover:text-cyan-900",
     "Close" : "hover:bg-rose-500 hover:text-rose-900",
     "Delete": "hover:bg-rose-500 hover:text-rose-900",
