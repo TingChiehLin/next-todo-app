@@ -14,6 +14,7 @@ type TodoContextType = Todostate & {
     addTodo: (id: number, name: string, description: string, created_at: string ,updated_at: string) => void,
     deleteTodo: (index: number) => void,
     updatedTodo: (id: number, name: string, description: string, updated_at: string) => void,
+    completedTodo: (id: number) => void
 }
 
 const initialCtx = {
@@ -21,6 +22,7 @@ const initialCtx = {
     addTodo: (id: number ,name: string,created_at: string ,updated_at: string) => {},
     deleteTodo: (id: number) => {},
     updatedTodo: (id: number, name: string, description: string, updatedDate: string) => {},
+    completedTodo: (id: number) => {}  
 }
 
 const initialState: Todostate = {
@@ -64,11 +66,19 @@ export const TodoProvider: React.FC<TodoProviderTypeProp> = ({children}) => {
         })
     }
 
+    const handleCompletedTodo = (id: number) => {   
+        todoDispatch({
+            type: "COMPLETED_TODO",
+            payload: id
+        })
+    }
+
     const ctxValue = {
         todos: todoState.todos,
         addTodo: handleAddTodo,
         deleteTodo:handleRemoveTodo,
         updatedTodo: handleUpdatedTodo,
+        completedTodo: handleCompletedTodo
     }
 
     return (

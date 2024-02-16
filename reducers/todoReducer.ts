@@ -34,7 +34,12 @@ type UpdateTodoAction = {
     payload: UpdatedToto
 }
 
-type TodoAction = AddTodoAction | RemoveTodoAction | UpdateTodoAction;
+type COMPLETED_TODO = {
+    type: "COMPLETED_TODO",
+    payload: number
+}
+
+type TodoAction = AddTodoAction | RemoveTodoAction | UpdateTodoAction | COMPLETED_TODO;
 
 export const todoReducer = (state: Todostate, action: TodoAction):Todostate => {
     const {type, payload} = action;
@@ -77,6 +82,22 @@ export const todoReducer = (state: Todostate, action: TodoAction):Todostate => {
         return {
             ...state,
             todos: updatedTodo
+        }
+    }
+
+    if(type === "COMPLETED_TODO") {
+        const completedTodo = state.todos.map((todo) => {
+            if(todo.id === payload) {
+                return {
+                    ...todo,
+                    is_completed: !todo.is_completed
+                }
+            }
+            return todo;
+        })
+        return {
+            ...state,
+            todos: completedTodo
         }
     }
 

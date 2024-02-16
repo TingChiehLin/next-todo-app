@@ -14,7 +14,11 @@ interface TodoListPropType {
 }
 
 const TodoList: React.FC<TodoListPropType> = ({todos, OnEdit}) => {
-    const {deleteTodo} = React.useContext(TodoContext);
+    const {deleteTodo, completedTodo} = React.useContext(TodoContext);
+
+    const handleComplete = (id: number) => {
+        completedTodo(id);
+    }
 
     const handleDelete = (id: number) => {
         deleteTodo(id);
@@ -44,7 +48,7 @@ const TodoList: React.FC<TodoListPropType> = ({todos, OnEdit}) => {
                     is_completed={todo.is_completed}
                     created_at={todo.created_at}
                     updated_at={todo.updated_at}
-                    onCompleted={() => {}}  
+                    onCompleted={() => handleComplete(todo.id)}  
                     onEdit={() => OnEdit(todo.id)}
                     onDelete={() => handleDelete(todo.id)}
                 />
