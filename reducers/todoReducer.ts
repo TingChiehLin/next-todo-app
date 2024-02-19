@@ -19,6 +19,11 @@ type UpdatedToto = {
     todos: Todo[]
 }
 
+type InitialTodoAction = {
+    type: "INITIAL_TODO",
+    payload: Todo[]
+}
+
 type AddTodoAction = {
     type: "ADD_TODO",
     payload: TodoItem
@@ -39,10 +44,17 @@ type COMPLETED_TODO = {
     payload: number
 }
 
-type TodoAction = AddTodoAction | RemoveTodoAction | UpdateTodoAction | COMPLETED_TODO;
+type TodoAction = InitialTodoAction | AddTodoAction | RemoveTodoAction | UpdateTodoAction | COMPLETED_TODO;
 
 export const todoReducer = (state: Todostate, action: TodoAction):Todostate => {
     const {type, payload} = action;
+
+    if(type === "INITIAL_TODO") {
+        return {
+            ...state,
+            todos:payload
+        }
+    }
 
     if(type === "ADD_TODO") {
         const newTodo:Todo = {

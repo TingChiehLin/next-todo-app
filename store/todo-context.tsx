@@ -25,14 +25,26 @@ const initialCtx = {
     completedTodo: (id: number) => {}  
 }
 
-const initialState: Todostate = {
-    todos: [],
-}
 
 export const TodoContext = React.createContext<TodoContextType>(initialCtx);
 
 export const TodoProvider: React.FC<TodoProviderTypeProp> = ({children}) => {
-    const [todoState, todoDispatch] = React.useReducer(todoReducer, initialState)
+    const [todoState, todoDispatch] = React.useReducer(todoReducer, {
+        todos: []
+    })
+
+    React.useEffect(() => {
+        handleInitialTodo()
+    },[])
+
+    const handleInitialTodo = () => {
+        getTodos().then((data) => {
+            todoDispatch({
+                type: "INITIAL_TODO",
+                payload: data
+            })
+        })
+    }
 
     const handleAddTodo = (id: number, name: string, description: string) => {
         todoDispatch({
