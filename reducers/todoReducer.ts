@@ -4,6 +4,7 @@ export type TodoItem = {
     id: number,
     name: string,
     description: string,
+    is_completed: boolean,
     created_at: string,
     updated_at: string
 }
@@ -57,17 +58,9 @@ export const todoReducer = (state: Todostate, action: TodoAction):Todostate => {
     }
 
     if(type === "ADD_TODO") {
-        const newTodo:Todo = {
-            id: payload.id,
-            name: payload.name,
-            description: payload.description,
-            is_completed: false,
-            created_at: payload.created_at,
-            updated_at: payload.updated_at
-        }
         return {
             ...state,
-            todos: [...state.todos, newTodo]
+            todos: [...state.todos, payload]
         }
     }
 

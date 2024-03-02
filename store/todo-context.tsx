@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import {Todostate, todoReducer } from "@/reducers/todoReducer";
 
-import { getTodos } from '@/libs/actions';
+import { getTodos, addTodos } from '@/libs/actions';
 
 interface TodoProviderTypeProp {
     children: React.ReactNode;
@@ -46,16 +46,19 @@ export const TodoProvider: React.FC<TodoProviderTypeProp> = ({children}) => {
         })
     }
 
-    const handleAddTodo = (id: number, name: string, description: string) => {
+    const handleAddTodo = async (id: number, name: string, description: string) => {
+        const newTodo = await addTodos({
+            id: id,
+            name: name,
+            description: description,
+            is_completed: false,
+            created_at: new Date().toLocaleDateString(),
+            updated_at: new Date().toLocaleDateString(),
+        });
+
         todoDispatch({
             type: "ADD_TODO",
-            payload: {
-                id: id,
-                name: name,
-                description: description,
-                created_at: new Date().toLocaleDateString(),
-                updated_at: new Date().toLocaleDateString()
-            }
+            payload: newTodo
         })
     }
 
