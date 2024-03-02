@@ -31,7 +31,9 @@ See [Demo Link](https://next14-to-do-app.vercel.app)
 
 ## API Guide
 
-[API Link](https://wayi.league-funny.com/api)
+```
+const APIURL = "https://wayi.league-funny.com/api";
+```
 
 GET 
 ```bash
