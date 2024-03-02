@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import {Todostate, todoReducer } from "@/reducers/todoReducer";
 
-import { getTodos, addTodos } from '@/libs/actions';
+import { getTodos, addTodos, removeTodos } from '@/libs/actions';
 
 interface TodoProviderTypeProp {
     children: React.ReactNode;
@@ -37,12 +37,11 @@ export const TodoProvider: React.FC<TodoProviderTypeProp> = ({children}) => {
         handleInitialTodo()
     },[])
 
-    const handleInitialTodo = () => {
-        getTodos().then((data) => {
-            todoDispatch({
-                type: "INITIAL_TODO",
-                payload: data
-            })
+    const handleInitialTodo = async () => {
+        const todos = await getTodos();
+        todoDispatch({
+            type: "INITIAL_TODO",
+            payload: todos
         })
     }
 
@@ -63,6 +62,7 @@ export const TodoProvider: React.FC<TodoProviderTypeProp> = ({children}) => {
     }
 
     const handleRemoveTodo = (id: number) => {
+        removeTodos(id);
         todoDispatch({
             type: "REMOVE_TODO",
             payload: id

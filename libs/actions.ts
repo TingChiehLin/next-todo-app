@@ -27,11 +27,23 @@ export const addTodos = async (todo: Todo): Promise<Todo> => {
     });
 
     if(!response.ok) {
-        throw new Error("Failed to fetch todos");
+        throw new Error("Failed to add todo");
     }
 
     const newTodo = await response.json();
     return newTodo.data;
 }
 
+export const removeTodos = async (id: number) => {
+    try {
+        await fetch(URL + `/task/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+    } catch(error) {
+        throw new Error("Faild to delete todo")
+    }
+}
 
