@@ -13,7 +13,7 @@ type UpdatedToto = {
     id: number,
     name: string,
     description: string,
-    updated_at: string
+    updated_at: string,
 }
 
  export type Todostate = {

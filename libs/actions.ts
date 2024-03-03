@@ -47,8 +47,19 @@ export const removeTodos = async (id: number) => {
     }
 }
 
-export const updateTodos = (todo: Todo) => {
-
+export const updateTodos = async (id: number) => {
+    try {
+        const response = await fetch(URL + `/task/${id}`,{
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        const updatedTodo = await response.json();
+        return updatedTodo.data;
+    } catch(error) {
+        throw new Error(`Faild to updated todo: ${error}`);
+    }
 }
 
 export const completedTodos = async (id: number) => {

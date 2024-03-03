@@ -70,7 +70,7 @@ export const TodoProvider: React.FC<TodoProviderTypeProp> = ({children}) => {
     }
 
     const handleUpdatedTodo = (id: number, name: string, description: string, updated_at: string) => {
-        
+        updateTodos(id);
         todoDispatch({
             type: "UPDATE_TODO",
             payload: {
