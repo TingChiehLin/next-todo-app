@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import {Todostate, todoReducer } from "@/reducers/todoReducer";
 
-import { getTodos, addTodos, removeTodos } from '@/libs/actions';
+import { getTodos, addTodos, removeTodos, updateTodos, completedTodos} from '@/libs/actions';
 
 interface TodoProviderTypeProp {
     children: React.ReactNode;
@@ -70,6 +70,7 @@ export const TodoProvider: React.FC<TodoProviderTypeProp> = ({children}) => {
     }
 
     const handleUpdatedTodo = (id: number, name: string, description: string, updated_at: string) => {
+        
         todoDispatch({
             type: "UPDATE_TODO",
             payload: {
@@ -82,6 +83,7 @@ export const TodoProvider: React.FC<TodoProviderTypeProp> = ({children}) => {
     }
 
     const handleCompletedTodo = (id: number) => {   
+        completedTodos(id);
         todoDispatch({
             type: "COMPLETED_TODO",
             payload: id

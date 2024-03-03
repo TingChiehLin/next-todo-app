@@ -43,7 +43,24 @@ export const removeTodos = async (id: number) => {
             }
         })
     } catch(error) {
-        throw new Error("Faild to delete todo")
+        throw new Error(`Faild to delete todo: ${error}`)
+    }
+}
+
+export const updateTodos = (todo: Todo) => {
+
+}
+
+export const completedTodos = async (id: number) => {
+    try {
+        await fetch(URL + `/task/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+    } catch(error) {
+        throw new Error(`Faild to complete todo: ${error}`)
     }
 }
 
