@@ -76,7 +76,6 @@ DELETE
 ## Feature
 
 - Responsive Design
-- Status of error handling, loading indicators, pagination, sorting, searching
 - Deploy to Vercel
 
 ## Design
